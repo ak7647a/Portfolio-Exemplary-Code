@@ -1,0 +1,203 @@
+---
+title: "Example Code"
+format: revealjs
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+
+## Bullets
+
+When you click the **Render** button a document will be generated that includes:
+
+-   Content authored with markdown
+-   Output from executable code
+
+## Code
+
+When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+
+# Setup
+
+```{r}
+# Load Packages
+library(tidyverse)
+library(ggplot2)
+library(ggtext)
+library(scales)
+library(patchwork)
+library(plotly)
+library(reshape2) #https://rpubs.com/OwaisAli/1103477
+library(readxl) 
+```
+
+Creating my signature theme
+```{r}
+my_theme<- theme_minimal(base_size = 14) +
+  theme(
+    plot.background  = element_rect(fill = "#FBFAF8", color = NA),
+    panel.background = element_rect(fill = "#FBFAF8", color = NA),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.y = element_line(color = "#E8E3DC", linewidth = 0.4),
+    axis.title = element_text(family = "sans", color = "#4A4A4A"),
+    axis.text  = element_text(color = "#6A6A6A"),
+    axis.ticks = element_blank(),
+    plot.title = element_text(face = "bold", size = 19, color = "#2F2F2F", hjust = 0.3),
+    plot.subtitle = element_text(size = 12, color = "#6F6F6F", hjust = 0.25),
+    plot.caption = element_text( size = 9, color = "#8A8A8A", hjust = -1),
+    legend.position = "right",
+    legend.title = element_text(face = "bold", family = "sans"),
+    legend.background = element_blank(),
+    legend.key = element_rect(fill = NA)
+  )
+```
+
+
+```{r}
+
+
+
+kSCt4 <- read_excel("kSCt4.xls")
+
+approval <- kSCt4|>
+  ggplot( aes( x= modeldate) ) +
+  geom_ribbon(
+    aes(ymin = disapprove_lo, ymax = disapprove_hi, fill = '#16877a'),
+    alpha=0.35
+  )+
+  geom_ribbon(
+    aes(ymin = approve_lo, ymax = approve_hi, fill = '#d96003' ),
+    alpha=0.35
+  )+
+  geom_line(
+    aes( y= disapprove_lo ),
+    color= '#d96003',
+    linetype = 'dotted',
+    size = 0.8,
+    alpha = 0.6
+  )+
+  geom_line(
+    aes( y= disapprove_hi ),
+    color= '#d96003',
+    linetype = 'dotted',
+    size = 0.8,
+    alpha = 0.6
+  )+
+  geom_line(
+    aes( y= approve_lo ),
+    color= '#16877a',
+    linetype = 'dotted',
+    size = 0.8,
+    alpha = 0.6
+  )+
+  geom_line(
+    aes( y= approve_hi),
+    color= '#16877a',
+    linetype = 'dotted',
+    size = 0.8,
+    alpha = 0.6
+  )+
+  geom_hline(
+    yintercept = 50
+  )+
+  geom_line(
+    aes( y= disapprove ),
+    color= '#d96003',
+    alpha = 1,
+    size = 0.8
+  )+
+  geom_line(
+    aes( y= approve ),
+    color= '#16877a',
+    alpha = 1,
+    size = 0.8
+  ) +
+  geom_text(
+    data = kSCt4 |>
+      slice_tail(n = 1),
+    aes(x = modeldate, y = disapprove, label = paste0("Disapprove\n", round(disapprove, 1), "%")),
+    color = '#d96003',
+    size = 3.5,
+    hjust = -0.1,
+    vjust = 0.8
+  ) +
+  geom_text(
+    data = kSCt4 |>
+      slice_tail(n = 1),
+    aes(x = modeldate, y = approve, label = paste0("Approve\n", round(approve, 1), "%")),
+    color = '#16877a',
+    size = 3.5,
+    hjust = -0.1,
+    vjust = 0.8
+  ) +
+  labs(
+    title= "Do Americans <span style = 'color: #16877a ;'>approve </span>or <span style = 'color: #d96003 ;'>dispprove</span> of
+Donald Trump?",
+    subtitle = "An updating polling average of Donald Trump's approval rating and disapproval rating in his
+second term, accounting for each poll's quality, recency, sample size, and partisan lean.",
+    caption = "Note: 90% of polls are projected to fall within the shaded regions.
+Updated February 17, 2026 at 11:04 PM . Get the data . Download image
+") +
+  scale_x_date(
+    limits = c(as.Date("2025-01-20"), as.Date("2026-02-11")),
+    breaks = seq(as.Date("2025-04-01"), as.Date("2026-01-01"), by = "3 months"),
+    labels = c("Apr 2025", "Jul", "Oct", "Jan 2026"),
+    expand = expansion( mult = c(0, .1))
+  )+
+  scale_y_continuous(
+    limits = c(30,70),
+    labels = function(x) paste0(x, ".0%"),
+    expand = expansion( mult = c(0, .1))
+  )+
+  guides(fill = "none", color = "none")  +
+  annotate("label",
+           x = as.Date("2025-03-05"),
+           y = 70,
+           label = "Approval/disapproval",
+           fill = "black",
+           color = "white",
+           label.size = 0,
+           label.r = unit(0.3, "lines"),
+           fontface = "bold") +
+  annotate("label",
+           x = as.Date("2025-05-05"),
+           y = 70,
+           label = "Net approval",
+           fill = "white",
+           color = "black",
+           label.size = 0.5,
+           label.r = unit(0.3, "lines"),
+           fontface = "bold") +
+  theme_minimal(base_size = 14) +
+  theme(
+    #plot.title = element_markdown(size = 30, hjust = 0, face = "bold", family = "sans"), (element)
+    plot.title.position = "plot",
+    plot.subtitle = element_text(hjust = 0, size = 20, family = "sans"),plot.background = element_rect(fill = "#f2f2f2", color = NA),
+    panel.grid.minor = element_blank(),
+    axis.title = element_blank(),
+    plot.caption.position = "plot",
+    plot.caption = element_text(hjust = 0, face = "italic", family = "sans"))
+
+```
+
+Interactive
+
+```{r}
+ggplotly(approval) |>
+ layout(
+  title= list(
+    text = paste0(
+     "Do Americans <span style='color:#16877a'>approve</span> or <span style='color:#d96003'>disapprove</span> of Donald Trump?",
+     "<br>",
+      "<sub>An updating polling average of Donald Trump's approval rating and disapproval rating in his<br>second term, accounting for each poll's quality, recency, sample size, and partisan lean</sub><br>"
+     ),
+     x = 0,
+    xanchor = "left",
+    y = 0.97,
+    yanchor = "top")
+ )
+```
+

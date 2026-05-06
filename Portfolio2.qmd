@@ -1,27 +1,33 @@
 ---
-title: "Example Code"
-format: revealjs
+title: "Portfolio Item 2"
+format:
+  revealjs:
+    theme: serif
+    slide-number: true
+    footer: "Exemplary code"
 ---
 
-## Quarto
+# Example Code
 
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+I chose the interactive graph from Problem Set 2 to be my example code. This was a data visualization project assigned on week 3 of the semester where we replicated <u> [this graph by Silver Bulletin](https://www.natesilver.net/p/trump-approval-ratings-nate-silver-bulletin)  </u> to the best of our abilities. 
 
-## Bullets
+## Process
 
-When you click the **Render** button a document will be generated that includes:
+As part of **Problem Set 2** we had to replicate a graph, the process included:
 
--   Content authored with markdown
--   Output from executable code
-
-## Code
-
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
-
+-   Accessing the data
+-   Experimenting with code to replicate the graph
+-   Adding an interactive layer to the process
 
 # Setup
 
-```{r}
+:::: {.columns}
+
+::: {.column width="30%"}
+Loading Packages
+
+```{r, echo=TRUE}
+
 # Load Packages
 library(tidyverse)
 library(ggplot2)
@@ -29,21 +35,25 @@ library(ggtext)
 library(scales)
 library(patchwork)
 library(plotly)
-library(reshape2) #https://rpubs.com/OwaisAli/1103477
+library(reshape2)
 library(readxl) 
 ```
 
+:::
+
+::: {.column width="70%"}
 Creating my signature theme
-```{r}
+
+```{r, echo=TRUE}
 my_theme<- theme_minimal(base_size = 14) +
   theme(
-    plot.background  = element_rect(fill = "#FBFAF8", color = NA),
+    plot.background = element_rect(fill = "#FBFAF8", color = NA),
     panel.background = element_rect(fill = "#FBFAF8", color = NA),
     panel.grid.major.x = element_blank(),
-    panel.grid.minor   = element_blank(),
+    panel.grid.minor = element_blank(),
     panel.grid.major.y = element_line(color = "#E8E3DC", linewidth = 0.4),
     axis.title = element_text(family = "sans", color = "#4A4A4A"),
-    axis.text  = element_text(color = "#6A6A6A"),
+    axis.text = element_text(color = "#6A6A6A"),
     axis.ticks = element_blank(),
     plot.title = element_text(face = "bold", size = 19, color = "#2F2F2F", hjust = 0.3),
     plot.subtitle = element_text(size = 12, color = "#6F6F6F", hjust = 0.25),
@@ -55,11 +65,15 @@ my_theme<- theme_minimal(base_size = 14) +
   )
 ```
 
+:::
 
-```{r}
+::::
 
+# Non-interactive graph
 
+## Code
 
+```{r, echo=TRUE}
 kSCt4 <- read_excel("kSCt4.xls")
 
 approval <- kSCt4|>
@@ -135,7 +149,7 @@ approval <- kSCt4|>
   ) +
   labs(
     title= "Do Americans <span style = 'color: #16877a ;'>approve </span>or <span style = 'color: #d96003 ;'>dispprove</span> of
-Donald Trump?",
+Donald Trump?"  ,
     subtitle = "An updating polling average of Donald Trump's approval rating and disapproval rating in his
 second term, accounting for each poll's quality, recency, sample size, and partisan lean.",
     caption = "Note: 90% of polls are projected to fall within the shaded regions.
@@ -154,7 +168,7 @@ Updated February 17, 2026 at 11:04 PM . Get the data . Download image
   )+
   guides(fill = "none", color = "none")  +
   annotate("label",
-           x = as.Date("2025-03-05"),
+           x = as.Date("2025-03-15"),
            y = 70,
            label = "Approval/disapproval",
            fill = "black",
@@ -163,7 +177,7 @@ Updated February 17, 2026 at 11:04 PM . Get the data . Download image
            label.r = unit(0.3, "lines"),
            fontface = "bold") +
   annotate("label",
-           x = as.Date("2025-05-05"),
+           x = as.Date("2025-06-15"),
            y = 70,
            label = "Net approval",
            fill = "white",
@@ -173,9 +187,10 @@ Updated February 17, 2026 at 11:04 PM . Get the data . Download image
            fontface = "bold") +
   theme_minimal(base_size = 14) +
   theme(
-    #plot.title = element_markdown(size = 30, hjust = 0, face = "bold", family = "sans"), (element)
+    plot.title = element_markdown(size=25),
     plot.title.position = "plot",
-    plot.subtitle = element_text(hjust = 0, size = 20, family = "sans"),plot.background = element_rect(fill = "#f2f2f2", color = NA),
+    plot.subtitle = element_text(hjust = 0, size = 17, family = "sans"),
+    plot.background = element_rect(fill = "#f2f2f2", color = NA),
     panel.grid.minor = element_blank(),
     axis.title = element_blank(),
     plot.caption.position = "plot",
@@ -183,21 +198,160 @@ Updated February 17, 2026 at 11:04 PM . Get the data . Download image
 
 ```
 
-Interactive
+## Result
 
 ```{r}
-ggplotly(approval) |>
+approval
+```
+
+# Interactive graph
+
+## Code
+
+```{r, echo=FALSE}
+
+approval1 <- kSCt4|>
+  ggplot( aes( x= modeldate) ) +
+  geom_ribbon(
+    aes(ymin = disapprove_lo, ymax = disapprove_hi, fill = '#16877a'),
+    alpha=0.35
+  )+
+  geom_ribbon(
+    aes(ymin = approve_lo, ymax = approve_hi, fill = '#d96003' ),
+    alpha=0.35
+  )+
+  geom_line(
+    aes( y= disapprove_lo ),
+    color= '#d96003',
+    linetype = 'dotted',
+    size = 0.8,
+    alpha = 0.6
+  )+
+  geom_line(
+    aes( y= disapprove_hi ),
+    color= '#d96003',
+    linetype = 'dotted',
+    size = 0.8,
+    alpha = 0.6
+  )+
+  geom_line(
+    aes( y= approve_lo ),
+    color= '#16877a',
+    linetype = 'dotted',
+    size = 0.8,
+    alpha = 0.6
+  )+
+  geom_line(
+    aes( y= approve_hi),
+    color= '#16877a',
+    linetype = 'dotted',
+    size = 0.8,
+    alpha = 0.6
+  )+
+  geom_hline(
+    yintercept = 50
+  )+
+  geom_line(
+    aes( y= disapprove ),
+    color= '#d96003',
+    alpha = 1,
+    size = 0.8
+  )+
+  geom_line(
+    aes( y= approve ),
+    color= '#16877a',
+    alpha = 1,
+    size = 0.8
+  ) +
+  scale_x_date(
+    limits = c(as.Date("2025-01-20"), as.Date("2026-02-11")),
+    breaks = seq(as.Date("2025-04-01"), as.Date("2026-01-01"), by = "3 months"),
+    labels = c("Apr 2025", "Jul", "Oct", "Jan 2026"),
+   expand = expansion(mult = c(0, .18))
+  )+
+  scale_y_continuous(
+    limits = c(30,70),
+    labels = function(x) paste0(x, ".0%"),
+    expand = expansion( mult = c(0, .1))
+  )+
+  guides(fill = "none", color = "none")  +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_markdown(size=25),
+    plot.title.position = "plot",
+    plot.subtitle = element_text(hjust = 0, size = 17, family = "sans"),
+    plot.background = element_rect(fill = "#f2f2f2", color = NA),
+    panel.grid.minor = element_blank(),
+    axis.title = element_blank(),
+    plot.caption.position = "plot",
+    plot.caption = element_text(hjust = 0, face = "italic", family = "sans"))
+
+```
+
+
+```{r,echo=TRUE, eval=TRUE, fig.width=20, fig.height=8, out.width="100%"}
+
+final <- ggplotly(approval1) |>
  layout(
+   paper_bgcolor = "#f2f2f2",
+   plot_bgcolor  = "#f2f2f2",
   title= list(
     text = paste0(
      "Do Americans <span style='color:#16877a'>approve</span> or <span style='color:#d96003'>disapprove</span> of Donald Trump?",
      "<br>",
-      "<sub>An updating polling average of Donald Trump's approval rating and disapproval rating in his<br>second term, accounting for each poll's quality, recency, sample size, and partisan lean</sub><br>"
+      "<sub>An updating polling average of Donald Trump's approval rating and disapproval rating in his<br>second term, accounting for each poll's quality, recency, sample size, and partisan lean.</sub>"
      ),
-     x = 0,
+     x = 0.03,
     xanchor = "left",
-    y = 0.97,
-    yanchor = "top")
- )
+    font = list(size = 28 ),
+    y = 0.90
+    ),
+  margin = list(t = 130, b = 62, r = 0),
+  autosize = TRUE,
+      annotations = list(
+      list(
+        x = as.numeric(as.Date("2026-02-11")),
+        y = last(kSCt4$disapprove),
+        text = paste0("Disapprove<br>", round(last(kSCt4$disapprove), 1), "%"),
+        xanchor = "left",
+        yanchor = "middle",
+        showarrow = FALSE,
+        font = list(color = "#d96003", size = 12),
+        xref = "x",
+        yref = "y"
+      ),
+      list(
+        x = as.numeric(as.Date("2026-02-11")),
+        y = last(kSCt4$approve),
+        text = paste0("Approve<br>", round(last(kSCt4$approve), 1), "%"),
+        xanchor = "left",
+        yanchor = "middle",
+        showarrow = FALSE,
+        font = list(color = "#16877a", size = 12),
+        xref = "x",
+        yref = "y"
+      ),
+      list(
+      text = "Note: 90% of polls are projected to fall within the shaded regions.<br>Updated February 17, 2026 at 11:04 PM · Get the data · Download image",
+      x = -0.06,
+      y = -0.06,
+      xref = "paper",
+      yref = "paper",
+      xanchor = "left",
+      yanchor = "top",
+      showarrow = FALSE,
+      font = list(size = 18, color = "black", face = "italic", family = "sans"),
+      align = "left"
+    )
+    )
+  ) |>
+  config(responsive = TRUE)
 ```
 
+## Result
+
+```{r}
+final
+```
+
+# Thank you

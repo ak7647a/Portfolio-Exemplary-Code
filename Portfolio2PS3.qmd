@@ -1,0 +1,89 @@
+---
+title: "PS3 Chunk"
+author: "Abhishu Karki"
+format:
+  pdf:
+   keep-tex: true
+   include-in-header:
+       text: |
+         \usepackage{fvextra}
+         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+         \DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
+knitr:
+  opts_chunk:
+    echo: true
+    eval: true
+    message: false
+    collapse: true
+    warning: false
+---
+
+The summary_table() function is designed to make it easy to create summary tables for data analysis. It is based on a revised version of the table‑formatting function I developed when I reviewed my midterm exam. In many research settings, analysts repeatedly calculate basic statistics such as sample size, means, and standard deviations for different groups. This function automates that process by allowing the user to specify a grouping variable and a numeric variable, and then produces a clean, presentation‑ready table using tidyverse syntax and kableExtra.
+
+## Function
+
+```{r}
+penguins <- penguins
+
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+summary_table <- function(data, group_var, numeric_var,
+                                  caption = NULL, digits = 1) {
+
+  summary_df <- data |>
+    filter(
+      !is.na({{ group_var }}),
+      !is.na({{ numeric_var }})
+    ) |>
+    group_by({{ group_var }}) |>
+    summarise(
+      N = n(),
+      Mean = round(mean({{ numeric_var }}), digits),
+      SD = round(sd({{ numeric_var }}), digits),
+      .groups = "drop"
+    ) |>
+    rename(Group = {{ group_var }})
+
+  summary_df |>
+    kbl(
+      caption = caption,
+      align = c("l", "c", "c", "c"),
+      booktabs = TRUE
+    ) |>
+    kable_styling(
+      position = "center",
+      latex_options = "hold_position"
+    ) |>
+    row_spec(0, bold = TRUE, background = "#2E86AB", color = "#F2F0EF") |>
+    column_spec(1, bold = TRUE)
+}
+
+```
+
+## demonstration
+
+```{r}
+
+speciestable <- summary_table( penguins, species, body_mass, "Mean Body Mass of Penguins by Species (grams)" )
+
+gendertable <- summary_table( penguins, sex, flipper_len, "Mean Flipper Length by Sex (millimeters)" )
+
+islandtable <-  summary_table( penguins, island , bill_len, "Mean Bill Length by Island (millimeters)" )
+
+```
+
+
+```{r}
+speciestable
+```
+
+```{r}
+gendertable
+```
+
+```{r}
+islandtable
+```
+# Thank You

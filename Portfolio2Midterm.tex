@@ -1,0 +1,604 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+\DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
+\usepackage{float}
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Midterm Exam},
+  pdfauthor={Abhishu Karki},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Midterm Exam}
+\author{Abhishu Karki}
+\date{2026-03-14}
+\begin{document}
+\maketitle
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Setup}
+\CommentTok{\# Load Packages}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(knitr)}
+\FunctionTok{library}\NormalTok{(kableExtra)}
+
+\DocumentationTok{\#\#Set working directory}
+\FunctionTok{getwd}\NormalTok{()}
+\DocumentationTok{\#\# [1] "/Users/ak/Library/CloudStorage/OneDrive{-}american.edu/\_S\textquotesingle{}26 SEM 2/SIS 750/Portfolio/Portfolio 2"}
+\FunctionTok{setwd}\NormalTok{(}\StringTok{"\textasciitilde{}/Library/CloudStorage/OneDrive{-}american.edu/\_S\textquotesingle{}26 SEM 2/SIS 750/Midterm/"}\NormalTok{)}
+
+\DocumentationTok{\#\#load data}
+
+\NormalTok{Malawiclean }\OtherTok{\textless{}{-}}\FunctionTok{read.csv}\NormalTok{(}\StringTok{"Malawiclean.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Creating my signature theme}
+\NormalTok{mytable\_theme }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(table, }
+                           \AttributeTok{caption =} \ConstantTok{NULL}\NormalTok{,}
+                           \AttributeTok{footnote\_text =} \ConstantTok{NULL}\NormalTok{)}
+\NormalTok{  table }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{kbl}\NormalTok{(}
+      \AttributeTok{caption =}\NormalTok{ caption,}
+      \AttributeTok{align =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{, }\FunctionTok{rep}\NormalTok{(}\StringTok{\textquotesingle{}c\textquotesingle{}}\NormalTok{, }\FunctionTok{ncol}\NormalTok{(table) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)),}
+      \AttributeTok{booktabs =} \ConstantTok{TRUE}
+\NormalTok{    ) }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{kable\_styling}\NormalTok{(}
+      \AttributeTok{position =} \StringTok{"center"}\NormalTok{,}
+       \AttributeTok{latex\_options =} \StringTok{"hold\_position"}
+\NormalTok{    ) }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{row\_spec}\NormalTok{(}\DecValTok{0}\NormalTok{, }\AttributeTok{bold =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{background =} \StringTok{"\#2E86AB"}\NormalTok{, }\AttributeTok{color =} \StringTok{"\#F2F0EF"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{column\_spec}\NormalTok{(}\DecValTok{1}\NormalTok{ , }\AttributeTok{bold =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{background =} \StringTok{"\#F2F0EF"}\NormalTok{, }\AttributeTok{color =} \StringTok{"\#2E86AB"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{footnote}\NormalTok{(}
+      \AttributeTok{general =}\NormalTok{ footnote\_text,}
+      \AttributeTok{footnote\_as\_chunk =} \ConstantTok{TRUE}\NormalTok{,}
+      \AttributeTok{escape =} \ConstantTok{FALSE}\NormalTok{,}
+      \AttributeTok{general\_title =} \StringTok{""}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Cleaning Data}
+\NormalTok{Malawicleandata }\OtherTok{\textless{}{-}}\NormalTok{ Malawiclean }\SpecialCharTok{|\textgreater{}} \CommentTok{\#Started with 1200 observations, 365 columns}
+  \FunctionTok{select}\NormalTok{(RESPNO, Development, Gender, Trust.police) }\CommentTok{\# reduced columns to 4}
+
+\NormalTok{Malawi }\OtherTok{\textless{}{-}}\NormalTok{ Malawicleandata }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(Trust.police }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"Not at all"}\NormalTok{, }\StringTok{"Just a little"}\NormalTok{, }\StringTok{"Somewhat"}\NormalTok{, }\StringTok{"A lot"}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} \CommentTok{\#reduced to 1193 observations}
+\FunctionTok{filter}\NormalTok{(Development }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"Urban"}\NormalTok{, }\StringTok{"Peri{-}urban"}\NormalTok{)) }\CommentTok{\# reduced to 214 observations}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Introduction}\label{introduction}
+
+This report looks at how much urban and peri‑urban Malawians trust the
+police. The data come from Afrobarometer Round 10 (2024) using a
+question called Q37G, which asks people, ``How much do you trust the
+police?'' Only real answers are included with no missing or ``don't
+know'' responses. The goal is to describe overall trust levels and to
+see whether men and women in these areas think differently about the
+police. All numbers come from the summary tables in the Malawi dataset.
+
+\section{Overall trust distribution}\label{overall-trust-distribution}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{overall\_trust }\OtherTok{\textless{}{-}}\NormalTok{ Malawi}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(Trust.police)}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Individuals =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{Percentage =} \FunctionTok{round}\NormalTok{(Individuals }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(Individuals) }\SpecialCharTok{*} \DecValTok{100}\NormalTok{, }\DecValTok{1}\NormalTok{),}
+    \AttributeTok{Percentage =} \FunctionTok{paste0}\NormalTok{(Percentage, }\StringTok{"\%"}\NormalTok{)}
+\NormalTok{    ) }\SpecialCharTok{|\textgreater{}}
+ \FunctionTok{arrange}\NormalTok{(}\FunctionTok{match}\NormalTok{(Trust.police, }
+                \FunctionTok{c}\NormalTok{(}\StringTok{"Not at all"}\NormalTok{, }\StringTok{"Just a little"}\NormalTok{, }\StringTok{"Somewhat"}\NormalTok{, }\StringTok{"A lot"}\NormalTok{))) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{rename}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Trust Level}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ Trust.police)}
+
+
+\CommentTok{\# Apply theme}
+\NormalTok{figure1 }\OtherTok{\textless{}{-}} \FunctionTok{mytable\_theme}\NormalTok{(}
+\NormalTok{  overall\_trust,}
+  \AttributeTok{caption =} \StringTok{"Trust in Police Among Urban and Peri{-}Urban Malawians"}\NormalTok{,}
+  \AttributeTok{footnote\_text =} \StringTok{"Source: Afrobarometer Round 10 Malawi (2024). N = 214 urban/peri{-}urban respondents."}
+\NormalTok{)}
+
+\NormalTok{figure1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[!h]
+\centering
+\caption{\label{tab:unnamed-chunk-4}Trust in Police Among Urban and Peri-Urban Malawians}
+\centering
+\begin{tabular}[t]{>{}lcc}
+\toprule
+\cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Trust Level}}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Individuals}}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Percentage}}}\\
+\midrule
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{Not at all}}} & 65 & 30.4\%\\
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{Just a little}}} & 73 & 34.1\%\\
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{Somewhat}}} & 37 & 17.3\%\\
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{A lot}}} & 39 & 18.2\%\\
+\bottomrule
+\multicolumn{3}{l}{\rule{0pt}{1em}Source: Afrobarometer Round 10 Malawi (2024). N = 214 urban/peri-urban respondents.}\\
+\end{tabular}
+\end{table}
+
+Overall, most people in urban and peri‑urban Malawi do not trust the
+police very much. About two‑thirds choose ``not at all'' or ``just a
+little.'' Only a small group of less than one out of five, say they
+trust the police ``a lot.'' This shows that trust in the police is
+generally low in these areas.
+
+\section{Trust distribution by Urban and Peri Urban
+area}\label{trust-distribution-by-urban-and-peri-urban-area}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trust\_by\_area }\OtherTok{\textless{}{-}}\NormalTok{ Malawi }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(Development, Trust.police) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Individuals =} \FunctionTok{n}\NormalTok{(), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(Development) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{Percentage =} \FunctionTok{round}\NormalTok{(Individuals }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(Individuals) }\SpecialCharTok{*} \DecValTok{100}\NormalTok{,}\DecValTok{1}\NormalTok{),}
+    \AttributeTok{Percentage =} \FunctionTok{paste0}\NormalTok{(Percentage, }\StringTok{"\%"}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Trust level}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ Trust.police) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Trust level}\StringTok{\textasciigrave{}}\NormalTok{, Development, Individuals, Percentage)}
+
+
+\NormalTok{trust\_by\_area\_clean }\OtherTok{\textless{}{-}}\NormalTok{ trust\_by\_area }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Development =} \FunctionTok{factor}\NormalTok{(Development, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Urban"}\NormalTok{, }\StringTok{"Peri\_Urban"}\NormalTok{)))}
+
+
+\CommentTok{\# reshape into 4 trust{-}level rows}
+\NormalTok{trust\_by\_area\_wide }\OtherTok{\textless{}{-}}\NormalTok{ trust\_by\_area\_clean }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{pivot\_wider}\NormalTok{(}
+    \AttributeTok{names\_from =}\NormalTok{ Development,}
+    \AttributeTok{values\_from =} \FunctionTok{c}\NormalTok{(Individuals, Percentage)}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{match}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Trust level}\StringTok{\textasciigrave{}}\NormalTok{,}
+                \FunctionTok{c}\NormalTok{(}\StringTok{"Not at all"}\NormalTok{, }\StringTok{"Just a little"}\NormalTok{, }\StringTok{"Somewhat"}\NormalTok{, }\StringTok{"A lot"}\NormalTok{))) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{rename}\NormalTok{(}
+    \StringTok{\textasciigrave{}}\AttributeTok{Urban(n)}\StringTok{\textasciigrave{}}\OtherTok{=}\NormalTok{ Individuals\_Urban,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Urban(\%)}\StringTok{\textasciigrave{}}\OtherTok{=}\NormalTok{ Percentage\_Urban,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Peri‑Urban(n)}\StringTok{\textasciigrave{}} \OtherTok{=} \StringTok{\textasciigrave{}}\AttributeTok{Individuals\_NA}\StringTok{\textasciigrave{}}\NormalTok{,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Peri‑Urban(\%)}\StringTok{\textasciigrave{}}\OtherTok{=} \StringTok{\textasciigrave{}}\AttributeTok{Percentage\_NA}\StringTok{\textasciigrave{}}
+\NormalTok{  )}
+
+\CommentTok{\# produce table with merged headers}
+\NormalTok{  figure2 }\OtherTok{\textless{}{-}} \FunctionTok{mytable\_theme}\NormalTok{(}
+\NormalTok{  trust\_by\_area\_wide,}
+  \AttributeTok{caption =} \StringTok{"Trust in Police Among Urban and Peri{-}Urban Malawians by area"}\NormalTok{,}
+  \AttributeTok{footnote\_text =} \StringTok{"Source: Afrobarometer Round 10 Malawi (2024). N = 214 urban/peri{-}urban respondents."}
+\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{add\_header\_above}\NormalTok{(}\FunctionTok{c}\NormalTok{(}
+    \StringTok{" "} \OtherTok{=} \DecValTok{1}\NormalTok{,}
+    \StringTok{"Individuals"} \OtherTok{=} \DecValTok{2}\NormalTok{,}
+    \StringTok{"Percentages"} \OtherTok{=} \DecValTok{2}
+\NormalTok{  ))}
+  
+\NormalTok{figure2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[!h]
+\centering
+\caption{\label{tab:unnamed-chunk-5}Trust in Police Among Urban and Peri-Urban Malawians by area}
+\centering
+\begin{tabular}[t]{>{}lcccc}
+\toprule
+\multicolumn{1}{c}{ } & \multicolumn{2}{c}{Individuals} & \multicolumn{2}{c}{Percentages} \\
+\cmidrule(l{3pt}r{3pt}){2-3} \cmidrule(l{3pt}r{3pt}){4-5}
+\cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Trust level}}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Peri‑Urban(n)}}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Urban(n)}}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Peri‑Urban(\%)}}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Urban(\%)}}}\\
+\midrule
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{Not at all}}} & 13 & 52 & 27.1\% & 31.3\%\\
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{Just a little}}} & 17 & 56 & 35.4\% & 33.7\%\\
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{Somewhat}}} & 8 & 29 & 16.7\% & 17.5\%\\
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{A lot}}} & 10 & 29 & 20.8\% & 17.5\%\\
+\bottomrule
+\multicolumn{5}{l}{\rule{0pt}{1em}Source: Afrobarometer Round 10 Malawi (2024). N = 214 urban/peri-urban respondents.}\\
+\end{tabular}
+\end{table}
+
+Trust levels look almost the same in urban and peri‑urban areas. Urban
+residents are a little more likely to say ``not at all,'' while
+peri‑urban residents are slightly more likely to say they trust the
+police ``a lot.'' But overall, the differences are small and it This
+suggests that where people live does not strongly affect their trust in
+the police.
+
+\section{Trust distribution by
+gender}\label{trust-distribution-by-gender}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trust\_by\_gender }\OtherTok{\textless{}{-}}\NormalTok{ Malawi }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{( }\StringTok{\textasciigrave{}}\AttributeTok{Trust level}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ Trust.police,}
+          \AttributeTok{Trust.police =} \StringTok{\textasciigrave{}}\AttributeTok{Trust level}\StringTok{\textasciigrave{}}\NormalTok{ )}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(Trust.police,Gender) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{Individuals =} \FunctionTok{n}\NormalTok{(), }\AttributeTok{.groups =} \StringTok{\textquotesingle{}drop\textquotesingle{}}
+\NormalTok{    ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(Gender) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+\AttributeTok{Percentage =} \FunctionTok{round}\NormalTok{(Individuals }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(Individuals) }\SpecialCharTok{*} \DecValTok{100}\NormalTok{, }\DecValTok{1}\NormalTok{),}
+    \AttributeTok{Percentage =} \FunctionTok{paste0}\NormalTok{(Percentage, }\StringTok{"\%"}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Trust level}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ Trust.police) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Trust level}\StringTok{\textasciigrave{}}\NormalTok{, Gender , Individuals, Percentage)}
+
+\NormalTok{trust\_by\_gender\_area\_wide }\OtherTok{\textless{}{-}}\NormalTok{ trust\_by\_gender }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{pivot\_wider}\NormalTok{(}
+    \AttributeTok{names\_from  =}\NormalTok{ Gender,}
+    \AttributeTok{values\_from =} \FunctionTok{c}\NormalTok{(Individuals, Percentage)}
+\NormalTok{    )}\SpecialCharTok{|\textgreater{}}
+\FunctionTok{arrange}\NormalTok{(}\FunctionTok{match}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Trust level}\StringTok{\textasciigrave{}}\NormalTok{,}
+                \FunctionTok{c}\NormalTok{(}\StringTok{"Not at all"}\NormalTok{, }\StringTok{"Just a little"}\NormalTok{, }\StringTok{"Somewhat"}\NormalTok{, }\StringTok{"A lot"}\NormalTok{))) }\SpecialCharTok{|\textgreater{}}
+\FunctionTok{rename}\NormalTok{(}
+    \StringTok{\textasciigrave{}}\AttributeTok{Men(n)}\StringTok{\textasciigrave{}}\OtherTok{=}\NormalTok{ Individuals\_Man,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Men(\%)}\StringTok{\textasciigrave{}}\OtherTok{=}\NormalTok{ Percentage\_Man,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Women(n)}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ Individuals\_Woman,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Women(\%)}\StringTok{\textasciigrave{}}\OtherTok{=}\NormalTok{ Percentage\_Woman}
+\NormalTok{  )}
+
+\CommentTok{\# Apply theme}
+\NormalTok{figure3 }\OtherTok{\textless{}{-}} \FunctionTok{mytable\_theme}\NormalTok{(}
+\NormalTok{  trust\_by\_gender\_area\_wide,}
+  \AttributeTok{caption =} \StringTok{"Trust in Police Among Malawians by gender"}\NormalTok{,}
+  \AttributeTok{footnote\_text =} \StringTok{"Source: Afrobarometer Round 10 Malawi (2024). N = 214 urban/peri{-}urban respondents."}
+\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{add\_header\_above}\NormalTok{(}\FunctionTok{c}\NormalTok{(}
+    \StringTok{" "} \OtherTok{=} \DecValTok{1}\NormalTok{,}
+    \StringTok{"Individuals"} \OtherTok{=} \DecValTok{2}\NormalTok{,}
+    \StringTok{"Percentages"} \OtherTok{=} \DecValTok{2}
+\NormalTok{  ))}
+
+\NormalTok{figure3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[!h]
+\centering
+\caption{\label{tab:unnamed-chunk-6}Trust in Police Among Malawians by gender}
+\centering
+\begin{tabular}[t]{>{}lcccc}
+\toprule
+\multicolumn{1}{c}{ } & \multicolumn{2}{c}{Individuals} & \multicolumn{2}{c}{Percentages} \\
+\cmidrule(l{3pt}r{3pt}){2-3} \cmidrule(l{3pt}r{3pt}){4-5}
+\cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Trust level}}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Men(n)}}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Women(n)}}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Men(\%)}}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Women(\%)}}}\\
+\midrule
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{Not at all}}} & 35 & 30 & 32.7\% & 28\%\\
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{Just a little}}} & 40 & 33 & 37.4\% & 30.8\%\\
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{Somewhat}}} & 20 & 17 & 18.7\% & 15.9\%\\
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{A lot}}} & 12 & 27 & 11.2\% & 25.2\%\\
+\bottomrule
+\multicolumn{5}{l}{\rule{0pt}{1em}Source: Afrobarometer Round 10 Malawi (2024). N = 214 urban/peri-urban respondents.}\\
+\end{tabular}
+\end{table}
+
+Gender differences in trust are substantial, with women consistently
+reporting higher trust in the police than men. While both genders lean
+toward lower trust, men are far more concentrated in the least trusting
+categories, with 32.7\% reporting ``not at all'' and 37.4\% reporting
+``just a little.'' Women, in contrast, are more evenly distributed, and
+notably, 25.2\% of women report trusting the police ``a lot'' which is a
+share more than twice that of men (11.2\%). This suggests that women
+hold more favorable opinions of police performance and trustworthiness
+than men within urban and peri‑urban areas.
+
+\section{Trust distribution by gender and Urban
+area}\label{trust-distribution-by-gender-and-urban-area}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\NormalTok{trust\_by\_gender\_area }\OtherTok{\textless{}{-}}\NormalTok{ Malawi }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \StringTok{\textasciigrave{}}\AttributeTok{Trust level}\StringTok{\textasciigrave{}}\OtherTok{=}\NormalTok{ Trust.police,}
+    \AttributeTok{Trust.police =} \StringTok{\textasciigrave{}}\AttributeTok{Trust level}\StringTok{\textasciigrave{}}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Trust level}\StringTok{\textasciigrave{}}\NormalTok{, Development, Gender) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{Individuals =} \FunctionTok{n}\NormalTok{(), }\AttributeTok{.groups =} \StringTok{"drop"}
+\NormalTok{    ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(Development, Gender) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{Percentage =} \FunctionTok{round}\NormalTok{(Individuals }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(Individuals) }\SpecialCharTok{*} \DecValTok{100}\NormalTok{, }\DecValTok{1}\NormalTok{),}
+    \AttributeTok{Percentage =} \FunctionTok{paste0}\NormalTok{(Percentage, }\StringTok{"\%"}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ungroup}\NormalTok{()}
+
+\NormalTok{trust\_by\_gender\_area\_wide }\OtherTok{\textless{}{-}}\NormalTok{ trust\_by\_gender\_area }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{pivot\_wider}\NormalTok{(}
+    \AttributeTok{names\_from  =} \FunctionTok{c}\NormalTok{(Development, Gender),}
+    \AttributeTok{values\_from =} \FunctionTok{c}\NormalTok{(Individuals, Percentage),}
+    \AttributeTok{names\_glue  =} \StringTok{"\{Development\}\_\{Gender\}\_\{.value\}"}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+\FunctionTok{arrange}\NormalTok{(}
+  \FunctionTok{match}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Trust level}\StringTok{\textasciigrave{}}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\StringTok{"Not at all"}\NormalTok{, }\StringTok{"Just a little"}\NormalTok{, }\StringTok{"Somewhat"}\NormalTok{, }\StringTok{"A lot"}\NormalTok{))}
+\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{rename}\NormalTok{(}
+    \StringTok{\textasciigrave{}}\AttributeTok{Male(n)}\StringTok{\textasciigrave{}}\OtherTok{=}\NormalTok{ Urban\_Man\_Individuals,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Male(\%)}\StringTok{\textasciigrave{}}\OtherTok{=}\NormalTok{ Urban\_Man\_Percentage,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Female(n)}\StringTok{\textasciigrave{}}\OtherTok{=}\NormalTok{ Urban\_Woman\_Individuals,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Female(\%)}\StringTok{\textasciigrave{}}\OtherTok{=}\NormalTok{ Urban\_Woman\_Percentage,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Male(n) }\StringTok{\textasciigrave{}}\OtherTok{=} \StringTok{\textasciigrave{}}\AttributeTok{Peri{-}urban\_Man\_Individuals}\StringTok{\textasciigrave{}}\NormalTok{,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Male(\%) }\StringTok{\textasciigrave{}}\OtherTok{=} \StringTok{\textasciigrave{}}\AttributeTok{Peri{-}urban\_Man\_Percentage}\StringTok{\textasciigrave{}}\NormalTok{,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Female(n) }\StringTok{\textasciigrave{}}\OtherTok{=} \StringTok{\textasciigrave{}}\AttributeTok{Peri{-}urban\_Woman\_Individuals}\StringTok{\textasciigrave{}}\NormalTok{,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Female(\%) }\StringTok{\textasciigrave{}}\OtherTok{=} \StringTok{\textasciigrave{}}\AttributeTok{Peri{-}urban\_Woman\_Percentage}\StringTok{\textasciigrave{}}
+\NormalTok{  )}
+
+\CommentTok{\#Apply theme}
+\NormalTok{figure4 }\OtherTok{\textless{}{-}} \FunctionTok{mytable\_theme}\NormalTok{(}
+\NormalTok{  trust\_by\_gender\_area\_wide,}
+  \AttributeTok{caption =} \StringTok{"Trust in Police Among Urban and Peri‑Urban Malawians by Gender"}\NormalTok{,}
+  \AttributeTok{footnote\_text =} \StringTok{"Source: Afrobarometer Round 10 Malawi (2024). N = 214 urban/peri‑urban respondents."}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{add\_header\_above}\NormalTok{(}
+    \FunctionTok{c}\NormalTok{(}\StringTok{" "} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"Peri{-}Urban"} \OtherTok{=} \DecValTok{2}\NormalTok{, }\StringTok{"Urban"} \OtherTok{=} \DecValTok{2}\NormalTok{, }\StringTok{"Peri{-}Urban "} \OtherTok{=} \DecValTok{2}\NormalTok{, }\StringTok{"Urban "} \OtherTok{=} \DecValTok{2}\NormalTok{)}
+\NormalTok{    ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{add\_header\_above}\NormalTok{(}
+    \FunctionTok{c}\NormalTok{(}\StringTok{" "} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"Individuals"} \OtherTok{=} \DecValTok{4}\NormalTok{, }\StringTok{"Percentage"} \OtherTok{=} \DecValTok{4}\NormalTok{)}
+\NormalTok{    )}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \StringTok{"scale\_down"}\NormalTok{)}
+
+\NormalTok{figure4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[!h]
+\centering\centering
+\caption{\label{tab:unnamed-chunk-7}Trust in Police Among Urban and Peri‑Urban Malawians by Gender}
+\centering
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
+\begin{tabular}[t]{>{}lcccccccc}
+\toprule
+\multicolumn{1}{c}{ } & \multicolumn{4}{c}{Individuals} & \multicolumn{4}{c}{Percentage} \\
+\cmidrule(l{3pt}r{3pt}){2-5} \cmidrule(l{3pt}r{3pt}){6-9}
+\multicolumn{1}{c}{ } & \multicolumn{2}{c}{Peri-Urban} & \multicolumn{2}{c}{Urban} & \multicolumn{2}{c}{Peri-Urban } & \multicolumn{2}{c}{Urban } \\
+\cmidrule(l{3pt}r{3pt}){2-3} \cmidrule(l{3pt}r{3pt}){4-5} \cmidrule(l{3pt}r{3pt}){6-7} \cmidrule(l{3pt}r{3pt}){8-9}
+\cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Trust level}}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Male(n) }}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Female(n) }}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Male(n)}}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Female(n)}}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Male(\%) }}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Female(\%) }}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Male(\%)}}} & \cellcolor[HTML]{2E86AB}{\textcolor[HTML]{F2F0EF}{\textbf{Female(\%)}}}\\
+\midrule
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{Not at all}}} & 6 & 7 & 29 & 23 & 25\% & 29.2\% & 34.9\% & 27.7\%\\
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{Just a little}}} & 12 & 5 & 28 & 28 & 50\% & 20.8\% & 33.7\% & 33.7\%\\
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{Somewhat}}} & 4 & 4 & 16 & 13 & 16.7\% & 16.7\% & 19.3\% & 15.7\%\\
+\cellcolor[HTML]{F2F0EF}{\textcolor[HTML]{2E86AB}{\textbf{A lot}}} & 2 & 8 & 10 & 19 & 8.3\% & 33.3\% & 12\% & 22.9\%\\
+\bottomrule
+\multicolumn{9}{l}{\rule{0pt}{1em}Source: Afrobarometer Round 10 Malawi (2024). N = 214 urban/peri‑urban respondents.}\\
+\end{tabular}}
+\end{table}
+
+When gender is examined separately within peri‑urban and urban areas,
+the gender gap becomes even clearer, particularly in peri‑urban
+communities. Peri‑urban women show higher levels of high trust, with
+33.3\% reporting ``a lot,'' compared to only 8.3\% of peri‑urban men.
+Urban women also report higher trust than urban men i.e.~22.9\% versus
+12.0\%, though the gap is less dramatic than in peri‑urban areas. These
+patterns suggest that women's greater trust in the police persists
+across geographic contexts, and that the difference is most pronounced
+in peri‑urban zones.
+
+\section{Thank you}\label{thank-you}
+
+
+
+
+\end{document}

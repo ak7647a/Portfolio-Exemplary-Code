@@ -52,7 +52,7 @@ The core of the work involved two layers of construction: first building a stati
 
 ### Output
 
-**[View Slide Deck](./index.html)** | **[View Code](./Portfolio2.qmd)**
+**[View Slide Deck](https://ak7647a.github.io/Portfolio-Exemplary-Code/)** | **[View Code](./Portfolio2.qmd)**
 
 ### Data
 

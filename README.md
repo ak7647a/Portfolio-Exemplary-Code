@@ -1,4 +1,4 @@
-# Exemplary Codes: 
+# Portfolio item 2: Exemplary Codes: 
 
 ## 1. Reusable Summary Table Function
 
@@ -14,9 +14,11 @@ so that column names can be passed directly as arguments, handles missing values
 and applies consistent header styling without needing any additional formatting code from the user.
 The demonstration applies it three times to the `penguins` dataset across different grouping
 and numeric variables, showing how the same function works in different contexts.
- 
+
+
 ## Files
 **[View Code](./Portfolio2PS3.qmd)** | **[View PDF](./Portfolio2PS3.pdf)**
+
 
 ## The Function
  
@@ -49,6 +51,7 @@ summary_table <- function(data, group_var, numeric_var,
 This project features an interactive replication of [Silver Bulletin's Trump approval rating tracker](https://www.natesilver.net/p/trump-approval-ratings-nate-silver-bulletin), built in R using `ggplot2` and `plotly`. The visualization displays Donald Trump's approval and disapproval polling averages across his second term, including 90% confidence bands rendered as shaded ribbons around each trend line.
 
 The core of the work involved two layers of construction: first building a static `ggplot` with styled ribbons, dotted confidence bounds, end-of-line labels, and a custom theme, second step was converting it to an interactive `plotly` figure using `ggplotly()` and formatting the title, caption, annotations, and background within plotly's `layout()` system, since ggplot styling does not transfer to `plotly()`. This result in a fully interactive chart rendered inside a Quarto revealjs slide deck.
+
 
 ### Output
 

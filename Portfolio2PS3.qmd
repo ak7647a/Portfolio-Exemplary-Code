@@ -62,7 +62,7 @@ summary_table <- function(data, group_var, numeric_var,
 
 ```
 
-## demonstration
+## Demonstration
 
 ```{r}
 
